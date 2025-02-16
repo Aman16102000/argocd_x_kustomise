@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: staging
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name: staging-secret
+    literals:
+      - DB_HOST=localhost
+      - DB_USER=root
+      - DB_PASS=pass
+    type: Opaque

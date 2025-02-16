@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: staging-apps
+  namespace: staging
+spec:
+  project: argoXkustomize
+  source:
+    repoURL: https://gitlab.argoXkustomize.io/argoXkustomize/argocd
+    targetRevision: master
+    path: apps/staging  # Points to this folder containing service1.yaml, service2.yaml
+  destination:
+    server: https://108711AD792D274E8A53CFB80328088E.gr7.us-west-2.eks.amazonaws.com
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

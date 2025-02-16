@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app  # Override name
+  namespace: staging
+  labels:
+    app: company
+spec:
+  replicas: 3  # Override replica count
+  selector:
+    matchLabels:
+      app: company
+  template:
+    metadata:
+      labels:
+        app: company
+    spec:
+      containers:
+        - name: company
+          image: nginx:latest  # Override image
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: staging-secret

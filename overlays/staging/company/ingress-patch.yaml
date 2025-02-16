@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-networkon  # Use cert-manager for SSL
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  ingressClassName: nginx  # Added Ingress Class
+  tls:
+    - hosts:
+        - staging-api.networkon.io  # Your domain
+      secretName: test-tls  # SSL Certificate Name
+  rules:
+    - host: staging-api.networkon.io
+      http:
+        paths:
+          - path: /company
+            pathType: Prefix
+            backend:
+              service:
+                name: company-svc
+                port:
+                  number: 80

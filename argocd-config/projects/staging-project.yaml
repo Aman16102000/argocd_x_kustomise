@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices-appset
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: auth
+            path: overlays/staging/auth
+            namespace: staging
+          - name: company
+            path: overlays/staging/company
+            namespace: staging
+  template:
+    metadata:
+      name: "{{name}}"
+    spec:
+      project: argoXkustomize
+      source:
+        repoURL: git@gitlab.argoXkustomize.io:argoXkustomize/argocd.git
+        targetRevision: master
+        path: "{{path}}"   # Dynamically inserts the correct path
+      destination:
+        server: https://108711AD792D274E8A53CFB80328088E.gr7.us-west-2.eks.amazonaws.com
+        namespace: "{{namespace}}"  # Dynamically sets namespace
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
