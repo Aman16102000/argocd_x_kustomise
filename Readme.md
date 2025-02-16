@@ -4,6 +4,7 @@ This repository contains the configuration for deploying applications using Argo
 
 Project Structure
 
+```
 .
 ├── apps                   # ArgoCD Application definitions
 │   ├── beta              # Beta environment applications
@@ -42,3 +43,4 @@ Project Structure
 │   ├── provider.tf       # Terraform provider configuration
 │   └── variables.tf      # Terraform variables
 │
+```
